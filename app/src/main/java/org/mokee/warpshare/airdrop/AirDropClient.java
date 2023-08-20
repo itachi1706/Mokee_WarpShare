@@ -25,7 +25,8 @@ import androidx.annotation.NonNull;
 import com.dd.plist.NSDictionary;
 import com.dd.plist.PropertyListFormatException;
 import com.dd.plist.PropertyListParser;
-import com.mokee.warpshare.CertificateManager;
+import com.itachi1706.warpshare.CertificateManager;
+//import com.mokee.warpshare.CertificateManager;
 
 import org.xml.sax.SAXException;
 
@@ -40,6 +41,7 @@ import java.net.SocketAddress;
 import java.text.ParseException;
 
 import javax.net.SocketFactory;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -65,11 +67,10 @@ class AirDropClient {
     private NetworkInterface mInterface;
 
     AirDropClient(CertificateManager certificateManager) {
+        X509TrustManager trustManager = new CertificateManager.TrustAllCerts();
         mHttpClient = new OkHttpClient.Builder()
                 .socketFactory(new LinkLocalAddressSocketFactory())
-                .sslSocketFactory(
-                        certificateManager.getSSLContext().getSocketFactory(),
-                        (X509TrustManager) certificateManager.getTrustManagers()[0])
+                .sslSocketFactory(certificateManager.createClientSSLSocketFactory(), trustManager)
                 .hostnameVerifier((hostname, session) -> true)
                 .build();
     }

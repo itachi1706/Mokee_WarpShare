@@ -32,7 +32,8 @@ import com.dd.plist.NSDictionary;
 import com.dd.plist.NSObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.mokee.warpshare.CertificateManager;
+import com.itachi1706.warpshare.CertificateManager;
+//import com.mokee.warpshare.CertificateManager;
 
 import org.mokee.warpshare.GossipyInputStream;
 import org.mokee.warpshare.base.DiscoverListener;

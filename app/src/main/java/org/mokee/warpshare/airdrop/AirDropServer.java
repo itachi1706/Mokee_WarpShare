@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.dd.plist.NSDictionary;
 import com.dd.plist.PropertyListParser;
+import com.itachi1706.warpshare.CertificateManager;
 import com.koushikdutta.async.AsyncNetworkSocket;
 import com.koushikdutta.async.AsyncSSLSocketWrapper;
 import com.koushikdutta.async.DataEmitter;
@@ -28,7 +29,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 import com.koushikdutta.async.http.server.UnknownRequestBody;
-import com.mokee.warpshare.CertificateManager;
+//import com.mokee.warpshare.CertificateManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,7 +59,7 @@ class AirDropServer {
 
     int start(String host) {
         mServer = new AsyncHttpServer();
-        mServer.listenSecure(PORT, mCertificateManager.getSSLContext());
+        mServer.listenSecure(PORT, mCertificateManager.getServerSSLContext());
         mServer.post("/Discover", new NSDictionaryHttpServerRequestCallback() {
             @Override
             protected void onRequest(InetAddress remote, NSDictionary request,

@@ -109,7 +109,7 @@ public class ReceiverService extends Service implements AirDropManager.ReceiverL
     static PendingIntent getTriggerIntent(Context context) {
         return PendingIntent.getForegroundService(context, 0,
                 new Intent(ACTION_SCAN_RESULT, null, context, ReceiverService.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     static void updateDiscoverability(Context context) {
