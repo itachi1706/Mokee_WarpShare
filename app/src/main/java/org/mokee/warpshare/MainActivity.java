@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements DiscoverListener 
             return true;
         }
 
-        boolean granted = false;
+        boolean granted;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             granted = checkSelfPermission(READ_MEDIA_VIDEO) == PERMISSION_GRANTED
                     && checkSelfPermission(READ_MEDIA_IMAGES) == PERMISSION_GRANTED

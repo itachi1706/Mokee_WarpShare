@@ -59,7 +59,6 @@ public class CertificateManager {
     private void initServerSSLContext2(Context context) {
         try {
             InputStream inputStream = context.getAssets().open("airdrop.bks");
-            // 选择keystore的储存类型，andorid只支持BKS
             KeyStore keyStore = KeyStore. getInstance("BKS");
             keyStore.load(inputStream, KEYSTORE_PWD.toCharArray());
 

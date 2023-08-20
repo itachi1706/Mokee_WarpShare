@@ -21,6 +21,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.ArrayMap;
@@ -53,6 +54,12 @@ import org.mokee.warpshare.nearbysharing.NearSharePeer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.Manifest.permission.BLUETOOTH_ADVERTISE;
+import static android.Manifest.permission.BLUETOOTH_CONNECT;
+import static android.Manifest.permission.BLUETOOTH_SCAN;
+import static android.Manifest.permission.READ_MEDIA_AUDIO;
+import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VIDEO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_OK;
@@ -259,7 +266,18 @@ public class ShareBottomSheetFragment extends BottomSheetDialogFragment
             return true;
         }
 
-        final boolean granted = mParent.checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
+        boolean granted;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            granted = mParent.checkSelfPermission(READ_MEDIA_VIDEO) == PERMISSION_GRANTED
+                    && mParent.checkSelfPermission(READ_MEDIA_IMAGES) == PERMISSION_GRANTED
+                    && mParent.checkSelfPermission(BLUETOOTH_CONNECT) == PERMISSION_GRANTED
+                    && mParent.checkSelfPermission(BLUETOOTH_SCAN) == PERMISSION_GRANTED
+                    && mParent.checkSelfPermission(BLUETOOTH_ADVERTISE) == PERMISSION_GRANTED
+                    && mParent.checkSelfPermission(READ_MEDIA_AUDIO) == PERMISSION_GRANTED;
+        } else {
+            granted = mParent.checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
+        }
+
         final boolean ready = mAirDropManager.ready() == STATUS_OK;
         if (!granted || !ready) {
             mIsInSetup = true;
