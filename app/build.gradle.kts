@@ -47,9 +47,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // Compile only cloud.jar
-//    implementation(files("libs/cloud.jar")) // MoKee ROM Cloud Maanger
-
     // Packages only on JCenter (now sunsetted)
     implementation(files("libs/com.microsoft.connecteddevices_connecteddevices-sdk_1.3.0.aar")) // Microsoft Connected Devices SDK
     implementation(files("libs/com.gemalto.jp2_jp2-android_1.0.aar")) // JP2 Library
@@ -62,9 +59,5 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.5")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.koushikdutta.async:androidasync:2.2.1")
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
     implementation("org.apache.commons:commons-compress:1.19")
-    // https://mvnrepository.com/artifact/com.gemalto.jp2/jp2-android
-
-
 }
