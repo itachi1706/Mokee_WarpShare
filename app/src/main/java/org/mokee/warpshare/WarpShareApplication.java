@@ -19,6 +19,7 @@ package org.mokee.warpshare;
 import android.app.Application;
 import android.content.Context;
 
+import com.itachi1706.warpshare.R;
 import com.mokee.warpshare.CertificateManager;
 
 public class WarpShareApplication extends Application {

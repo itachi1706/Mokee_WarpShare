@@ -59,6 +59,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_OK;
 
+import com.itachi1706.warpshare.R;
+
 @SuppressWarnings("SwitchStatementWithTooFewBranches")
 public class MainActivity extends AppCompatActivity implements DiscoverListener {
 
@@ -168,13 +170,12 @@ public class MainActivity extends AppCompatActivity implements DiscoverListener 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

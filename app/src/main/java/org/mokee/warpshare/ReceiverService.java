@@ -63,6 +63,8 @@ import static android.bluetooth.le.ScanSettings.CALLBACK_TYPE_MATCH_LOST;
 import static androidx.core.content.FileProvider.getUriForFile;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_OK;
 
+import com.itachi1706.warpshare.R;
+
 public class ReceiverService extends Service implements AirDropManager.ReceiverListener {
 
     private static final String TAG = "ReceiverService";

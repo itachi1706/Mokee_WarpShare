@@ -39,6 +39,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.itachi1706.warpshare.R;
 
 import org.mokee.warpshare.airdrop.AirDropManager;
 import org.mokee.warpshare.airdrop.AirDropPeer;
