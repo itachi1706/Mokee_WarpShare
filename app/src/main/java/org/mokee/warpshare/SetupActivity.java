@@ -19,6 +19,7 @@ package org.mokee.warpshare;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -30,6 +31,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.mokee.warpshare.airdrop.AirDropManager;
 
+import static android.Manifest.permission.BLUETOOTH_ADVERTISE;
+import static android.Manifest.permission.BLUETOOTH_CONNECT;
+import static android.Manifest.permission.BLUETOOTH_SCAN;
+import static android.Manifest.permission.READ_MEDIA_AUDIO;
+import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VIDEO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.bluetooth.BluetoothAdapter.ACTION_REQUEST_ENABLE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -39,6 +46,9 @@ import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_NO_BLUETOOTH;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_NO_WIFI;
 
 import com.itachi1706.warpshare.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("SwitchStatementWithTooFewBranches")
 public class SetupActivity extends AppCompatActivity {
@@ -108,7 +118,18 @@ public class SetupActivity extends AppCompatActivity {
 
     private void updateState() {
         final int ready = mAirDropManager.ready();
-        if (checkSelfPermission(WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+        boolean hasPermission = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            hasPermission = checkSelfPermission(READ_MEDIA_VIDEO) == PERMISSION_GRANTED
+                    && checkSelfPermission(READ_MEDIA_IMAGES) == PERMISSION_GRANTED
+                    && checkSelfPermission(BLUETOOTH_SCAN) == PERMISSION_GRANTED
+                    && checkSelfPermission(BLUETOOTH_CONNECT) == PERMISSION_GRANTED
+                    && checkSelfPermission(BLUETOOTH_ADVERTISE) == PERMISSION_GRANTED
+                    && checkSelfPermission(READ_MEDIA_AUDIO) == PERMISSION_GRANTED;
+        } else {
+            hasPermission = checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
+        }
+        if (!hasPermission) {
             mGroupPerm.setVisibility(View.VISIBLE);
             mGroupWifi.setVisibility(View.GONE);
             mGroupBt.setVisibility(View.GONE);
@@ -128,7 +149,19 @@ public class SetupActivity extends AppCompatActivity {
 
     private void requestPermission() {
         mLastRequestForPermission = SystemClock.elapsedRealtime();
-        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE}, REQUEST_PERM);
+        List<String> permissions;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions = new ArrayList<>(List.of(READ_MEDIA_VIDEO, READ_MEDIA_IMAGES, READ_MEDIA_AUDIO));
+        } else {
+            permissions = new ArrayList<>(List.of(WRITE_EXTERNAL_STORAGE));
+        }
+
+        permissions.add(BLUETOOTH_CONNECT);
+        permissions.add(BLUETOOTH_SCAN);
+        permissions.add(BLUETOOTH_ADVERTISE);
+
+        requestPermissions(permissions.toArray(new String[0]), REQUEST_PERM);
+
     }
 
     private void setupWifi() {

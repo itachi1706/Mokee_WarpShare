@@ -20,6 +20,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.ArrayMap;
@@ -55,6 +56,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.Manifest.permission.BLUETOOTH_ADVERTISE;
+import static android.Manifest.permission.BLUETOOTH_CONNECT;
+import static android.Manifest.permission.BLUETOOTH_SCAN;
+import static android.Manifest.permission.READ_MEDIA_AUDIO;
+import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VIDEO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_OK;
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements DiscoverListener 
 
         mAirDropManager = new AirDropManager(this,
                 WarpShareApplication.from(this).getCertificateManager());
-        mAirDropManager.registerTrigger(TriggerReceiver.getTriggerIntent(this));
+        registerBluetoothTrigger();
 
         mNearShareManager = new NearShareManager(this);
 
@@ -121,6 +128,14 @@ public class MainActivity extends AppCompatActivity implements DiscoverListener 
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    private void registerBluetoothTrigger() {
+        if (checkSelfPermission(BLUETOOTH_CONNECT) == PERMISSION_GRANTED
+                && checkSelfPermission(BLUETOOTH_ADVERTISE) == PERMISSION_GRANTED
+                && checkSelfPermission(BLUETOOTH_SCAN) == PERMISSION_GRANTED) {
+            mAirDropManager.registerTrigger(TriggerReceiver.getTriggerIntent(this));
+        }
     }
 
     @Override
@@ -229,7 +244,19 @@ public class MainActivity extends AppCompatActivity implements DiscoverListener 
             return true;
         }
 
-        final boolean granted = checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
+        boolean granted = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            granted = checkSelfPermission(READ_MEDIA_VIDEO) == PERMISSION_GRANTED
+                    && checkSelfPermission(READ_MEDIA_IMAGES) == PERMISSION_GRANTED
+                    && checkSelfPermission(BLUETOOTH_CONNECT) == PERMISSION_GRANTED
+                    && checkSelfPermission(BLUETOOTH_SCAN) == PERMISSION_GRANTED
+                    && checkSelfPermission(BLUETOOTH_ADVERTISE) == PERMISSION_GRANTED
+                    && checkSelfPermission(READ_MEDIA_AUDIO) == PERMISSION_GRANTED;
+        } else {
+            granted = checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
+        }
+
+//        final boolean granted = checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
         final boolean ready = mAirDropManager.ready() == STATUS_OK;
         if (!granted || !ready) {
             mIsInSetup = true;
