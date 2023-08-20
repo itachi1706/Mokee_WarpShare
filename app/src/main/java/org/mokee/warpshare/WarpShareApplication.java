@@ -19,8 +19,7 @@ package org.mokee.warpshare;
 import android.app.Application;
 import android.content.Context;
 
-import com.itachi1706.warpshare.CertificateManager;
-import com.itachi1706.warpshare.R;
+import org.mokee.warpshare.customcerts.CertificateManager;
 //import com.mokee.warpshare.CertificateManager;
 
 public class WarpShareApplication extends Application {
@@ -34,9 +33,6 @@ public class WarpShareApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        mCertificateManager = new CertificateManager(this, R.raw.keystore,
-//                R.raw.apple_root_ca,
-//                R.raw.mokee_warp_ca);
         mCertificateManager = new CertificateManager(this);
     }
 

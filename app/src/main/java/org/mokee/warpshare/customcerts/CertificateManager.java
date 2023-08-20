@@ -1,4 +1,4 @@
-package com.itachi1706.warpshare;
+package org.mokee.warpshare.customcerts;
 
 import android.content.Context;
 

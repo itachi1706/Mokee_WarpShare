@@ -20,7 +20,7 @@ import android.util.Log;
 
 import com.dd.plist.NSDictionary;
 import com.dd.plist.PropertyListParser;
-import com.itachi1706.warpshare.CertificateManager;
+import org.mokee.warpshare.customcerts.CertificateManager;
 import com.koushikdutta.async.AsyncNetworkSocket;
 import com.koushikdutta.async.AsyncSSLSocketWrapper;
 import com.koushikdutta.async.DataEmitter;

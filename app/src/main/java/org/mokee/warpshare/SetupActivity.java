@@ -45,8 +45,6 @@ import static android.provider.Settings.ACTION_WIFI_SETTINGS;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_NO_BLUETOOTH;
 import static org.mokee.warpshare.airdrop.AirDropManager.STATUS_NO_WIFI;
 
-import com.itachi1706.warpshare.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

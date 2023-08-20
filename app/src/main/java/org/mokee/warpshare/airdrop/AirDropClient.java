@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
 import com.dd.plist.NSDictionary;
 import com.dd.plist.PropertyListFormatException;
 import com.dd.plist.PropertyListParser;
-import com.itachi1706.warpshare.CertificateManager;
+import org.mokee.warpshare.customcerts.CertificateManager;
 //import com.mokee.warpshare.CertificateManager;
 
 import org.xml.sax.SAXException;
@@ -41,7 +41,6 @@ import java.net.SocketAddress;
 import java.text.ParseException;
 
 import javax.net.SocketFactory;
-import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.xml.parsers.ParserConfigurationException;
 

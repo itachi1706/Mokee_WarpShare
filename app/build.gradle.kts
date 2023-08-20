@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.itachi1706.warpshare"
+    namespace = "org.mokee.warpshare"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.itachi1706.warpshare"
+        applicationId = "org.mokee.warpshare"
         minSdk = 19
         targetSdk = 33
         versionCode = 1
